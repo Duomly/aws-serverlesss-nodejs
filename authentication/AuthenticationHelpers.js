@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs-then');
 
 module.exports.signJWT = (id) => {
   return jwt.sign({ id: id }, process.env.JWT_SECRET, {expiresIn: 604800});
