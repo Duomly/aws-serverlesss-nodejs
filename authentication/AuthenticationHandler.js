@@ -1,6 +1,6 @@
 const db = require('../database');
 const bcrypt = require('bcryptjs-then');
-const { success, errResponse, signJWT, validRegistration } = require('./AuthenticationHelpers');
+const { success, errResponse, signJWT, validRegistration, verifyPassword } = require('./AuthenticationHelpers');
 const User = require('../user/User');
 
 module.exports.register = (r, cb) => {
@@ -29,6 +29,6 @@ function register(body) {
 
 function login(body) {
   return User.findOne({ email: body.email })
-    .then(user => !user ? Promise.reject(new Error('Incorrect password or username')) : comparePassword(body.password, user.password, user._id))
+    .then(user => !user ? Promise.reject(new Error('Incorrect password or username')) : verifyPassword(body.password, user.password, user._id))
     .then(signedJWT => ({ auth: true, token: signedJWT }));
 }
