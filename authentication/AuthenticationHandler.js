@@ -23,7 +23,7 @@ function register(body) {
   return validRegistration(body)
     .then(() => User.findOne({ email: body.email }))
     .then(exists => exists ? Promise.reject(new Error('User exists')) : bcrypt.hash(body.password, 8))
-    .then(hashedPass => User.create({ name: body.name, email: body.email, password: hashedPass, premium: false}))
+    .then(hashedPass => User.create({ name: body.name, email: body.email, password: hashedPass, premium: false, createdAt: new Date()}))
     .then(user => ({ auth: true, token: signJWT(user._id) })); 
 }
 

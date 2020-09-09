@@ -40,3 +40,21 @@ functions:
           method: get
           cors: true
           authorizer: verify-jwt
+
+  createOrder:
+    handler: order/OrderHandler.create
+    events:
+      - http:
+          path: order/create
+          method: post
+          cors: true
+          authorizer: verify-jwt
+
+  myOrders:
+    handler: order/OrderHandler.myOrders
+    events:
+      - http:
+          path: order/my
+          method: get
+          cors: true
+          authorizer: verify-jwt

@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
   password: String,
   premium: Boolean,
   premiumEnds: Date,
+  createdAt: Date,
 });
 mongoose.model('User', UserSchema);
 

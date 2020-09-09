@@ -18,7 +18,7 @@ module.exports.validRegistration = (body) => {
 
 module.exports.verifyPassword = (sentPassword, realPassword, userId) => {
   return bcrypt.compare(sentPassword, realPassword)
-    .then(valid => !valid ? Promise.reject(new Error('Incorrect password or username')) : signJWT(userId)
+    .then(valid => !valid ? Promise.reject(new Error('Incorrect password or username')) : module.exports.signJWT(userId)
   );
 }
 
