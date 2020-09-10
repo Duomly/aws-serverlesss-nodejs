@@ -5,12 +5,17 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs10.x
   stage: dev
   region: us-east-1
   environment:
     JWT_SECRET: ${file(./secrets.json):JWT_SECRET}
     DB: ${file(./secrets.json):DB}
+    PAYMENT_VENDOR: ${file(./secrets.json):PAYMENT_VENDOR}
+    PAYMENT_AUTH: ${file(./secrets.json):PAYMENT_AUTH}
+    PAYMENT_YEARLY: ${file(./secrets.json):PAYMENT_YEARLY}
+    PAYMENT_MONTHLY: ${file(./secrets.json):PAYMENT_MONTHLY}
+    PAYMENT_RETURN: ${file(./secrets.json):PAYMENT_RETURN}
 
 functions:
   verify-jwt:
@@ -58,3 +63,11 @@ functions:
           method: get
           cors: true
           authorizer: verify-jwt
+
+  handlePaymentWebhook:
+    handler: order/OrderHandler.webhook
+    events:
+      - http:
+          path: order/webhook
+          method: post
+          cors: true
